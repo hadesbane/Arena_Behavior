@@ -9,7 +9,7 @@ public abstract class BehaviorPath extends Routine{
 	protected Deque<Routine> graveyard; //space so that the children aren't lost after use
 	
 	public BehaviorPath(){
-		this(null);
+		this(new ArrayDeque<Routine>());
 	}
 	
 	public BehaviorPath(Deque<Routine> list){
@@ -25,7 +25,6 @@ public abstract class BehaviorPath extends Routine{
 		return this.children == null && this.graveyard == null;
 	}
 	
-	@Override
 	public void start(){
 		super.start();
 	}
@@ -43,7 +42,7 @@ public abstract class BehaviorPath extends Routine{
 	//Means I don't have to constantly remake the routines
 	protected void recycle(){
 		while(!this.graveyard.isEmpty()){
-			this.children.addFirst(this.graveyard.removeFirst());
+			this.children.push(this.graveyard.pop());
 		}
 	}
 	

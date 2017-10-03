@@ -3,30 +3,30 @@ import java.util.Random;
 public class Wander extends Routine {
 	
 	private static Random random;
-	private final Arena arena;
 	private MoveTo move;
 	
-	public Wander(Arena arena){
-		this.arena = arena;
+	public Wander(){
 		this.random = new Random();
-		this.move = new MoveTo(random.nextInt(this.arena.getWidth()), random.nextInt(this.arena.getLength()));
+		
 	}
 	
 	@Override
 	public void start(){
 		super.start();
-		this.move.start();
 	}
 	
 	public void reset(){
-		this.move = new MoveTo(random.nextInt(this.arena.getWidth()), random.nextInt(this.arena.getLength()));
+		this.state = null;
+		if(this.move != null){
+			this.move.reset();
+		}
 	}
 	
 	@Override
 	public void act(Fighter fighter, Arena arena){
-		//No clue why passing in a different arena
-		if(!this.move.isRunning()){
-			return;
+		if(this.move == null){
+			this.move = new MoveTo(random.nextInt(arena.getWidth()), random.nextInt(arena.getLength()));
+			this.move.start();
 		}
 		this.move.act(fighter, arena);
 		if(this.move.isSuccess()){

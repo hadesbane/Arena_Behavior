@@ -1,4 +1,5 @@
-//This is a repeating behavior *duh*
+//This is a behavior that repeats what it is given for either a set time(>0 given)
+//or an indefinite time(-1 given). 
 public class Repeat extends Routine{
 	private int times;
 	private Routine routine;
@@ -34,9 +35,12 @@ public class Repeat extends Routine{
 	@Override 
 	public void reset(){
 		this.times = baseTimes;
+		this.routine.reset();
+		this.state = null;
 	}
 	
 	@Override
+	//Fails when the fighter is dead or what is repeating fails
 	public void act(Fighter fighter, Arena arena){
 		if(!fighter.isAlive() || this.routine.isFailure()){
 			fail();
@@ -49,12 +53,13 @@ public class Repeat extends Routine{
 			else{
 				this.times--;
 				this.routine.reset();
-				this.routine.start();
-				//This resets the routine passed, not Repeat itself
 			}
 		}
 		if(this.routine.isRunning()){
 			this.routine.act(fighter, arena);
+		}
+		else{
+			this.routine.start();
 		}
 	}
 	

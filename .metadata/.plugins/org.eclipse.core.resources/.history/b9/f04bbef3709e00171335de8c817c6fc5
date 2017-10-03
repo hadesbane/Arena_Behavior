@@ -1,0 +1,17 @@
+/.metadata/
+/Arena.class
+/Attack.class
+/BehaviorPath.class
+/Fighter.class
+/FighterFactory$NameGen.class
+/FighterFactory.class
+/FighterIsWeaker.class
+/FindSafePlace.class
+/Ideas
+/IsFighterInRange.class
+/IsFighterInSight.class
+/MoveTo.class
+/Repeat.class
+/Routine$State.class
+/Routine.class
+/Routines.class

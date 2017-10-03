@@ -26,7 +26,7 @@ public class MoveTo extends Routine {
 				fail();
 				return;
 			}
-			if(!isFighterAtGoal(fighter)){
+			if(!isAtGoal(fighter)){
 				moveFighter(fighter);
 			}
 		}
@@ -51,12 +51,12 @@ public class MoveTo extends Routine {
 				 fighter.setX(currX - 1);
 			 }
 		 }
-		 if(isFighterAtGoal(fighter)){
+		 if(isAtGoal(fighter)){
 			 succeed();
 		 }
 	 }
 	 
-	 private boolean isFighterAtGoal(Fighter fighter){
+	 private boolean isAtGoal(Fighter fighter){
 		 return this.destX == fighter.getX() && this.destY == fighter.getY();
 	 }
 }

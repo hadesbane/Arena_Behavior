@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;MoveTo.isFighterAtGoal(...)&apos; to &apos;isAtGoal&apos;&#x0D;&#x0A;- Original project: &apos;Ai&apos;&#x0D;&#x0A;- Original element: &apos;MoveTo.isFighterAtGoal(...)&apos;&#x0D;&#x0A;- Renamed element: &apos;MoveTo.isAtGoal(...)&apos;&#x0D;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;isFighterAtGoal&apos;" flags="589826" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;{MoveTo.java[MoveTo~isFighterAtGoal~QFighter;" name="isAtGoal" references="true" stamp="1505964498074" version="1.0"/>
+</session>

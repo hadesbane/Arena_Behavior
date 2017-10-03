@@ -1,10 +1,11 @@
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 //factory to more easily create routines for the behavior tree
 public class Routines {
 
-	public Routine Sequence(Routine...routines){
+	public Sequence sequence(Routine...routines){
 		Sequence sequence = new Sequence();
 		for(Routine routine : routines){
 			sequence.addRoutine(routine);
@@ -12,7 +13,7 @@ public class Routines {
 		return sequence;
 	}
 	
-	public Routine Selector(Routine...routines){
+	public Selector selector(Routine...routines){
 		Selector selector = new Selector();
 		for(Routine routine : routines){
 			selector.addRoutine(routine);
@@ -20,27 +21,30 @@ public class Routines {
 		return selector;
 	}
 	
-	public Routine RandomSelector(Routine...routines){
-		Set<Routine> set = new HashSet<Routine>();
+	public Selector randomSelector(Routine...routines){
+		Set<Integer> set = new HashSet<Integer>();
 		Selector selector = new Selector();
-		for(Routine routine : routines){
-			set.add(routine);
-		}
-		for(Routine routine : set){
-			selector.addRoutine(routine);
+		Random random = new Random();
+		while(set.size() < routines.length){
+			int curr = random.nextInt(routines.length);
+			while(!set.contains(curr)){
+				curr = random.nextInt(routines.length);
+			}
+			selector.addRoutine(routines[curr]);
+			set.add(curr);
 		}
 		return selector;
 	}
 	
-	public Routine Wander(Arena arena){
-		return new Wander(arena);
+	public Wander Wander(){
+		return new Wander();
 	}
 	
-	public Routine AttackGroup(){
-			return this.helper(new Sequence(),0);
+	public Routine attackGroup(){
+			return this.attackHelper(new Sequence(),0);
 	}
 	
-	private Routine helper(Routine routine, int num){
+	private Routine attackHelper(Routine routine, int num){
 		if(routine != null){
 			if(routine.isBranchable()){
 				BehaviorPath rout = ((BehaviorPath)routine);
@@ -67,11 +71,18 @@ public class Routines {
 						break;
 				}
 				for(Routine curr : rout.children){
-					curr = this.helper(curr, num+1);
+					curr = this.attackHelper(curr, num+1);
 				}
 				return rout;
 			}
 		}
 		return null;
+	}
+	
+	public Routine Brain(){
+		Repeat brain = new Repeat();
+		Selector styles = (Selector) this.selector(this.attackGroup(), this.Wander());
+		brain.setRoutine(styles);
+		return brain;
 	}
 }

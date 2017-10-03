@@ -45,8 +45,8 @@ public class FighterFactory {
 		String name = this.name.generateName();
 		Types type = this.types[this.random.nextInt(this.types.length)];
 		int[] stats = new int[8];
-		stats[0] = this.random.nextInt(arena.getWidth()+1);
-		stats[1] = this.random.nextInt(arena.getLength()+1);
+		stats[0] = arena.placeWidth();
+		stats[1] = arena.placeLength();
 		for(int i = 2; i < 8; i++){
 			stats[i] = this.random.nextInt(11);
 		}

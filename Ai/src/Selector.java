@@ -8,23 +8,26 @@ public class Selector extends BehaviorPath{
 	@Override
 	public void act(Fighter fighter, Arena arena){
 		if(this.children.peek()!= null){
-			while(!this.children.isEmpty() && !this.isSuccess()){
-				Routine curr = this.children.removeFirst();
-				while(curr.isRunning()){
+				Routine curr = this.children.peek();
+				if(curr.state == null){
+					curr.start();
+				}
+				if(curr.isRunning()){
 					curr.act(fighter, arena);
+				}
+				if(curr.isSuccess()){
+					this.succeed();
+					this.recycle();
+					return;
 				}
 				if(curr.isFailure() && !this.children.isEmpty()){
 					this.graveyard.addFirst(curr);
 					curr = this.children.removeFirst();
 				}
-			}
-		}
-		this.recycle();
-		if(this.isSuccess()){
-			succeed();
-		}
-		else{
-			fail();
+				else{
+					this.fail();
+					this.recycle();
+				}
 		}
 	}
 }
